@@ -3,8 +3,13 @@ import { Circle, Layer, Stage } from 'react-konva';
 
 function App() {
   const creature = useRef<any>(null);
+
+  const randomX = () => Math.random() * window.innerHeight;
+
   useEffect(() => {
-    creature.current.to({ x: 100 });
+    setTimeout(() => creature.current.to({ x: randomX() }), 100);
+    setTimeout(() => creature.current.to({ x: randomX() }), 500);
+    setTimeout(() => creature.current.to({ x: randomX() }), 1000);
   }, []);
 
   return (
