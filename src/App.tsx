@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     moveRecursively(creature);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
