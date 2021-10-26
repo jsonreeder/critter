@@ -9,6 +9,7 @@ function App() {
   useEffect(() => {
     creature.current.to({
       x: randomX(),
+      duration: 5,
       onFinish: () => creature.current.to({ x: randomX() }),
     });
   }, []);
