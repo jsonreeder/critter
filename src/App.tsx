@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Circle, Layer, Stage } from 'react-konva';
 
 function App() {
   const creature = useRef<any>(null);
+  useEffect(() => {
+    creature.current.to({ x: 100 });
+  }, []);
 
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
@@ -14,7 +17,6 @@ function App() {
           height={50}
           fill="purple"
           ref={creature}
-          onClick={() => creature.current.to({ x: 100 })}
         />
       </Layer>
     </Stage>
