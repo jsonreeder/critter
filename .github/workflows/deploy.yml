@@ -12,4 +12,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CRITTER_8C09A }}'
           projectId: critter-8c09a
           channelId: live
-
