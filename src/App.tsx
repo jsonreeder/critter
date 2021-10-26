@@ -7,9 +7,10 @@ function App() {
   const randomX = () => Math.random() * window.innerHeight;
 
   useEffect(() => {
-    setTimeout(() => creature.current.to({ x: randomX() }), 100);
-    setTimeout(() => creature.current.to({ x: randomX() }), 500);
-    setTimeout(() => creature.current.to({ x: randomX() }), 1000);
+    creature.current.to({
+      x: randomX(),
+      onFinish: () => creature.current.to({ x: randomX() }),
+    });
   }, []);
 
   return (
