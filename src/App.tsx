@@ -6,12 +6,16 @@ function App() {
 
   const randomX = () => Math.random() * window.innerHeight;
 
-  useEffect(() => {
-    creature.current.to({
+  const moveRecursively = (node: any) => {
+    node.current.to({
       x: randomX(),
       duration: 5,
-      onFinish: () => creature.current.to({ x: randomX() }),
+      onFinish: () => moveRecursively(node),
     });
+  };
+
+  useEffect(() => {
+    moveRecursively(creature);
   }, []);
 
   return (
