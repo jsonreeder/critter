@@ -4,11 +4,13 @@ import { Circle, Layer, Stage } from 'react-konva';
 function App() {
   const creature = useRef<any>(null);
 
-  const randomX = () => Math.random() * window.innerHeight;
+  const randomX = () => Math.random() * window.innerWidth;
+  const randomY = () => Math.random() * window.innerHeight;
 
   const moveRecursively = (node: any) => {
     node.current.to({
       x: randomX(),
+      y: randomY(),
       duration: 5,
       onFinish: () => moveRecursively(node),
     });
