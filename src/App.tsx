@@ -3,11 +3,14 @@ import { Circle, Layer, Stage } from 'react-konva';
 
 function App() {
   const critter = useRef<any>(null);
-  const critterSize = 25;
-  const critterPadding = 2 * critterSize;
+  const critterRadius = 25;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-  const randomX = () => Math.random() * (window.innerWidth + critterPadding);
-  const randomY = () => Math.random() * (window.innerHeight + critterPadding);
+  const randomX = () =>
+    critterRadius + Math.random() * (width - 2 * critterRadius);
+  const randomY = () =>
+    critterRadius + Math.random() * (height - 2 * critterRadius);
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
   const moveRecursively = (node: any) => {
@@ -29,7 +32,7 @@ function App() {
         <Circle
           x={randomX()}
           y={randomY()}
-          radius={critterSize}
+          radius={critterRadius}
           fill="purple"
           ref={critter}
         />
