@@ -6,12 +6,13 @@ function App() {
 
   const randomX = () => Math.random() * window.innerWidth;
   const randomY = () => Math.random() * window.innerHeight;
+  const randomSpeed = () => Math.random() * 50;
 
   const moveRecursively = (node: any) => {
     node.current.to({
       x: randomX(),
       y: randomY(),
-      duration: 5,
+      duration: randomSpeed(),
       onFinish: () => moveRecursively(node),
     });
   };
