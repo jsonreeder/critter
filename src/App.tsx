@@ -1,8 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { Circle, Layer, Stage } from 'react-konva';
+import { Image, Layer, Stage } from 'react-konva';
+
+import useImage from 'use-image';
 
 function App() {
   const critter = useRef<any>(null);
+  const url =
+    'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
+  const [image] = useImage(url);
+
   const critterRadius = 25;
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -29,11 +35,12 @@ function App() {
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
-        <Circle
+        <Image
+          image={image}
+          width={critterRadius}
+          height={critterRadius}
           x={randomX()}
           y={randomY()}
-          radius={critterRadius}
-          fill="purple"
           ref={critter}
         />
       </Layer>
