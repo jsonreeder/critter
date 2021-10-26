@@ -1,7 +1,7 @@
-import { Box, Grommet } from 'grommet';
 import { useSpring, animated } from 'react-spring';
 
 import React from 'react';
+import { Circle, Layer, Stage } from 'react-konva';
 
 function App() {
   const styles = useSpring({
@@ -11,19 +11,11 @@ function App() {
   });
 
   return (
-    <Grommet plain full>
-      <Box fill align="center" justify="center">
-        <animated.div
-          style={{
-            width: 80,
-            height: 80,
-            backgroundColor: '#46e891',
-            borderRadius: 16,
-            ...styles,
-          }}
-        />
-      </Box>
-    </Grommet>
+    <Stage width={window.innerWidth} height={window.innerHeight}>
+      <Layer>
+        <Circle x={200} y={200} width={50} height={50} fill="purple" />
+      </Layer>
+    </Stage>
   );
 }
 
