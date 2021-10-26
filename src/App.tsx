@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Circle, Layer, Stage } from 'react-konva';
 
 function App() {
-  const creature = useRef<any>(null);
+  const critter = useRef<any>(null);
 
   const randomX = () => Math.random() * window.innerWidth;
   const randomY = () => Math.random() * window.innerHeight;
@@ -18,7 +18,7 @@ function App() {
   };
 
   useEffect(() => {
-    moveRecursively(creature);
+    moveRecursively(critter);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -30,7 +30,7 @@ function App() {
           width={50}
           height={50}
           fill="purple"
-          ref={creature}
+          ref={critter}
         />
       </Layer>
     </Stage>
