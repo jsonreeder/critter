@@ -25,8 +25,8 @@ function App() {
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         <Circle
-          x={200}
-          y={200}
+          x={randomX()}
+          y={randomY()}
           width={50}
           height={50}
           fill="purple"
