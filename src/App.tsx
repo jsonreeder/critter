@@ -1,8 +1,9 @@
+import { Grommet } from 'grommet';
 import React from 'react';
 
 function App() {
   return (
-    <div className="App">
+    <Grommet plain>
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -16,7 +17,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+    </Grommet>
   );
 }
 
