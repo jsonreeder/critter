@@ -1,22 +1,20 @@
-import { Grommet } from 'grommet';
+import { Box, Grommet } from 'grommet';
 import React from 'react';
 
 function App() {
   return (
-    <Grommet plain>
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Grommet plain full>
+      <Box fill align="center" justify="center">
+        <Box
+          height="xsmall"
+          width="xsmall"
+          align="center"
+          justify="center"
+          background="brand"
+          round="xlarge"
+          animation="pulse"
+        />
+      </Box>
     </Grommet>
   );
 }
