@@ -9,14 +9,12 @@ function App() {
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
   const [image] = useImage(url);
 
-  const critterRadius = 25;
+  const critterSize = 100;
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  const randomX = () =>
-    critterRadius + Math.random() * (width - 2 * critterRadius);
-  const randomY = () =>
-    critterRadius + Math.random() * (height - 2 * critterRadius);
+  const randomX = () => Math.random() * (width - critterSize);
+  const randomY = () => Math.random() * (height - critterSize);
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
   const moveRecursively = (node: any) => {
@@ -37,8 +35,8 @@ function App() {
       <Layer>
         <Image
           image={image}
-          width={critterRadius}
-          height={critterRadius}
+          width={critterSize}
+          height={critterSize}
           x={randomX()}
           y={randomY()}
           ref={critter}
