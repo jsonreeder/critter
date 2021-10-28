@@ -27,15 +27,15 @@ function App() {
 
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
-  const moveRecursively = (node: any) => {
-    node.current.to({
+  const moveRecursively = () => {
+    critter.current.to({
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
       onFinish: () => {
         setTimeout(() => {
           setPoop();
-          moveRecursively(node);
+          moveRecursively();
         }, 2000);
       },
     });
@@ -52,7 +52,7 @@ function App() {
   };
 
   useEffect(() => {
-    moveRecursively(critter);
+    moveRecursively();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
