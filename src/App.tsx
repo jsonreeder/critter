@@ -5,8 +5,12 @@ import { Image, Layer, Stage } from 'react-konva';
 import useImage from 'use-image';
 
 function App() {
-  const critter = useRef<any>(null);
-  const poops = [useRef<any>(null), useRef<any>(null), useRef<any>(null)];
+  const critter = useRef<Konva.Image>(null);
+  const poops = [
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+  ];
   let nextPoop = 0;
 
   const urlCritter =
@@ -32,7 +36,7 @@ function App() {
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
   const moveRecursively = () => {
-    critter.current.to({
+    critter.current?.to({
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
@@ -48,7 +52,8 @@ function App() {
   };
 
   const setPoop = () => {
-    const poop: Konva.Image = poops[nextPoop % 3].current;
+    const poop = poops[nextPoop % 3].current;
+    if (!poop || !critter.current) return;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
       y: critter.current.y() + critterSize * 0.5,
