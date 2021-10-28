@@ -29,7 +29,7 @@ function App() {
       duration: randomSpeed(),
       onFinish: () => {
         setTimeout(() => {
-          addPoop({ x: 10, y: 10 });
+          addPoop({ x: node.current.x(), y: node.current.y() });
           moveRecursively(node);
         }, 2000);
       },
@@ -37,7 +37,7 @@ function App() {
   };
 
   const addPoop = ({ x, y }: { x: number; y: number }) => {
-    setPoop(true);
+    setPoop([x, y]);
   };
 
   useEffect(() => {
@@ -60,8 +60,8 @@ function App() {
             image={imagePoop}
             width={sizePoop}
             height={sizePoop}
-            x={randomX()}
-            y={randomY()}
+            x={poop[0]}
+            y={poop[1]}
           />
         )}
       </Layer>
