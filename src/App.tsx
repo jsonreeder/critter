@@ -69,6 +69,7 @@ function App() {
             ref={ref}
             visible={false}
             key={idx}
+            draggable={true}
           />
         ))}
         <Image
