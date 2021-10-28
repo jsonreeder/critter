@@ -54,27 +54,16 @@ function App() {
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
-        <Image
-          image={imagePoop}
-          width={sizePoop}
-          height={sizePoop}
-          ref={poops[0]}
-          visible={false}
-        />
-        <Image
-          image={imagePoop}
-          width={sizePoop}
-          height={sizePoop}
-          ref={poops[1]}
-          visible={false}
-        />
-        <Image
-          image={imagePoop}
-          width={sizePoop}
-          height={sizePoop}
-          ref={poops[2]}
-          visible={false}
-        />
+        {poops.map((ref, idx) => (
+          <Image
+            image={imagePoop}
+            width={sizePoop}
+            height={sizePoop}
+            ref={ref}
+            visible={false}
+            key={idx}
+          />
+        ))}
         <Image
           image={imageCritter}
           width={critterSize}
