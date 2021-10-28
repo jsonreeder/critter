@@ -70,6 +70,7 @@ function App() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
+    event.target.offsetY(100);
     event.target.image(imagePlant);
   };
 
