@@ -10,6 +10,13 @@ function App() {
     useRef<Konva.Image>(null),
     useRef<Konva.Image>(null),
     useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
+    useRef<Konva.Image>(null),
   ];
   let nextPoop = 0;
 
@@ -51,7 +58,7 @@ function App() {
   };
 
   const setPoop = () => {
-    const poop = poops[nextPoop % 3].current;
+    const poop = poops[nextPoop % poops.length].current;
     if (!poop || !critter.current) return;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
