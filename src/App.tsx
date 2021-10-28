@@ -30,8 +30,8 @@ function App() {
       onFinish: () => {
         setTimeout(() => {
           poop.current.position({
-            x: node.current.x(),
-            y: node.current.y(),
+            x: node.current.x() + critterSize * 0.5,
+            y: node.current.y() + critterSize * 0.75,
           });
           poop.current.show();
           moveRecursively(node);
@@ -48,19 +48,19 @@ function App() {
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         <Image
+          image={imagePoop}
+          width={sizePoop}
+          height={sizePoop}
+          ref={poop}
+          visible={false}
+        />
+        <Image
           image={imageCritter}
           width={critterSize}
           height={critterSize}
           x={randomX()}
           y={randomY()}
           ref={critter}
-        />
-        <Image
-          image={imagePoop}
-          width={sizePoop}
-          height={sizePoop}
-          ref={poop}
-          visible={false}
         />
       </Layer>
     </Stage>
