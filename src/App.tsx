@@ -34,17 +34,21 @@ function App() {
       duration: randomSpeed(),
       onFinish: () => {
         setTimeout(() => {
-          const poop = poops[nextPoop % 3].current;
-          poop.position({
-            x: node.current.x() + critterSize * 0.5,
-            y: node.current.y() + critterSize * 0.5,
-          });
-          poop.show();
-          nextPoop++;
+          setPoop();
           moveRecursively(node);
         }, 2000);
       },
     });
+  };
+
+  const setPoop = () => {
+    const poop = poops[nextPoop % 3].current;
+    poop.position({
+      x: critter.current.x() + critterSize * 0.5,
+      y: critter.current.y() + critterSize * 0.5,
+    });
+    poop.show();
+    nextPoop++;
   };
 
   useEffect(() => {
