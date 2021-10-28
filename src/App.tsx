@@ -24,7 +24,6 @@ function App() {
   const [imagePlant] = useImage(urlPlant);
 
   const critterSize = 100;
-  const sizePoop = 30;
   const width = window.innerWidth;
   const height = window.innerHeight;
 
@@ -85,8 +84,8 @@ function App() {
             key={idx}
             draggable={true}
             onClick={handleClick}
-            width={sizePoop}
-            height={sizePoop}
+            scaleX={0.2}
+            scaleY={0.2}
           />
         ))}
         <Image
