@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
 import useImage from 'use-image';
 
 function App() {
+  const [poop, setPoop] = useState<any>(null);
   const critter = useRef<any>(null);
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
@@ -27,9 +28,16 @@ function App() {
       y: randomY(),
       duration: randomSpeed(),
       onFinish: () => {
-        setTimeout(() => moveRecursively(node), 2000);
+        setTimeout(() => {
+          addPoop({ x: 10, y: 10 });
+          moveRecursively(node);
+        }, 2000);
       },
     });
+  };
+
+  const addPoop = ({ x, y }: { x: number; y: number }) => {
+    setPoop(true);
   };
 
   useEffect(() => {
@@ -47,13 +55,15 @@ function App() {
           y={randomY()}
           ref={critter}
         />
-        <Image
-          image={imagePoop}
-          width={sizePoop}
-          height={sizePoop}
-          x={randomX()}
-          y={randomY()}
-        />
+        {poop && (
+          <Image
+            image={imagePoop}
+            width={sizePoop}
+            height={sizePoop}
+            x={randomX()}
+            y={randomY()}
+          />
+        )}
       </Layer>
     </Stage>
   );
