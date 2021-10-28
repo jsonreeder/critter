@@ -26,7 +26,9 @@ function App() {
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
-      onFinish: () => moveRecursively(node),
+      onFinish: () => {
+        setTimeout(() => moveRecursively(node), 2000);
+      },
     });
   };
 
