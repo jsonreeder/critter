@@ -33,18 +33,17 @@ function App() {
       y: randomY(),
       duration: randomSpeed(),
       onFinish: () => {
+        const willPoop = decideWillPoop();
+        const milliseconds = willPoop ? 4000 : 1500;
         setTimeout(() => {
-          setPoop();
+          if (willPoop) setPoop();
           moveRecursively();
-        }, 2000);
+        }, milliseconds);
       },
     });
   };
 
   const setPoop = () => {
-    const shouldPoop = Math.random() > 0.5; // Poop half the time
-    if (!shouldPoop) return;
-
     const poop = poops[nextPoop % 3].current;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
@@ -52,6 +51,10 @@ function App() {
     });
     poop.show();
     nextPoop++;
+  };
+
+  const decideWillPoop = () => {
+    return Math.random() > 0.5; // Poop half the time
   };
 
   useEffect(() => {
