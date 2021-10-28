@@ -5,11 +5,15 @@ import useImage from 'use-image';
 
 function App() {
   const critter = useRef<any>(null);
-  const url =
+  const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
-  const [image] = useImage(url);
+  const [imageCritter] = useImage(urlCritter);
+  const urlPoop =
+    'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/poop.png?alt=media&token=ce8fcdef-1e57-4213-8ac0-98991107a943';
+  const [imagePoop] = useImage(urlPoop);
 
   const critterSize = 100;
+  const sizePoop = 30;
   const width = window.innerWidth;
   const height = window.innerHeight;
 
@@ -34,12 +38,19 @@ function App() {
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         <Image
-          image={image}
+          image={imageCritter}
           width={critterSize}
           height={critterSize}
           x={randomX()}
           y={randomY()}
           ref={critter}
+        />
+        <Image
+          image={imagePoop}
+          width={sizePoop}
+          height={sizePoop}
+          x={randomX()}
+          y={randomY()}
         />
       </Layer>
     </Stage>
