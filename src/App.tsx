@@ -34,7 +34,7 @@ function App() {
         setTimeout(() => {
           poop.current.position({
             x: node.current.x() + critterSize * 0.5,
-            y: node.current.y() + critterSize * 0.75,
+            y: node.current.y() + critterSize * 0.5,
           });
           poop.current.show();
           moveRecursively(node);
