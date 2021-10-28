@@ -42,6 +42,9 @@ function App() {
   };
 
   const setPoop = () => {
+    const shouldPoop = Math.random() > 0.5; // Poop half the time
+    if (!shouldPoop) return;
+
     const poop = poops[nextPoop % 3].current;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
