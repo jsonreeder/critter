@@ -1,3 +1,4 @@
+import Konva from 'konva';
 import React, { useEffect, useRef } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
@@ -14,6 +15,9 @@ function App() {
   const urlPoop =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/poop.png?alt=media&token=ce8fcdef-1e57-4213-8ac0-98991107a943';
   const [imagePoop] = useImage(urlPoop);
+  const urlPlant =
+    'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/plant.png?alt=media&token=1ed59c0d-b854-4ef6-830c-1a605e82883e';
+  const [imagePlant] = useImage(urlPlant);
 
   const critterSize = 100;
   const sizePoop = 30;
@@ -44,7 +48,7 @@ function App() {
   };
 
   const setPoop = () => {
-    const poop = poops[nextPoop % 3].current;
+    const poop: Konva.Image = poops[nextPoop % 3].current;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
       y: critter.current.y() + critterSize * 0.5,
@@ -61,18 +65,23 @@ function App() {
     moveRecursively();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleClick = (event: any) => {
+    event.target.image(imagePlant);
+  };
+
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         {poops.map((ref, idx) => (
           <Image
             image={imagePoop}
-            width={sizePoop}
-            height={sizePoop}
             ref={ref}
             visible={false}
             key={idx}
             draggable={true}
+            onClick={handleClick}
+            width={sizePoop}
+            height={sizePoop}
           />
         ))}
         <Image
