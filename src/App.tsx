@@ -20,6 +20,9 @@ function App() {
 
   const randomX = () => Math.random() * (width - critterSize);
   const randomY = () => Math.random() * (height - critterSize);
+  const initialX = randomX();
+  const initialY = randomY();
+
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
   const moveRecursively = (node: any) => {
@@ -58,8 +61,8 @@ function App() {
           image={imageCritter}
           width={critterSize}
           height={critterSize}
-          x={randomX()}
-          y={randomY()}
+          x={initialX}
+          y={initialY}
           ref={critter}
         />
       </Layer>
