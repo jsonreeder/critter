@@ -5,7 +5,9 @@ import useImage from 'use-image';
 
 function App() {
   const critter = useRef<any>(null);
-  const poop = useRef<any>(null);
+  const poops = [useRef<any>(null), useRef<any>(null), useRef<any>(null)];
+  let nextPoop = 0;
+
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
   const [imageCritter] = useImage(urlCritter);
@@ -32,11 +34,13 @@ function App() {
       duration: randomSpeed(),
       onFinish: () => {
         setTimeout(() => {
-          poop.current.position({
+          const poop = poops[nextPoop % 3].current;
+          poop.position({
             x: node.current.x() + critterSize * 0.5,
             y: node.current.y() + critterSize * 0.5,
           });
-          poop.current.show();
+          poop.show();
+          nextPoop++;
           moveRecursively(node);
         }, 2000);
       },
@@ -54,7 +58,21 @@ function App() {
           image={imagePoop}
           width={sizePoop}
           height={sizePoop}
-          ref={poop}
+          ref={poops[0]}
+          visible={false}
+        />
+        <Image
+          image={imagePoop}
+          width={sizePoop}
+          height={sizePoop}
+          ref={poops[1]}
+          visible={false}
+        />
+        <Image
+          image={imagePoop}
+          width={sizePoop}
+          height={sizePoop}
+          ref={poops[2]}
           visible={false}
         />
         <Image
