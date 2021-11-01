@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import { Easings } from 'konva/lib/Tween';
 import React, { useEffect, useRef } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
@@ -57,6 +58,14 @@ function App() {
     });
   };
 
+  const jump = () => {
+    if (!critter.current) return;
+    critter.current.to({
+      y: critter.current.y() - 50,
+      duration: 0.2,
+    });
+  };
+
   const setPoop = () => {
     const poop = poops[nextPoop % poops.length].current;
     if (!poop || !critter.current) return;
@@ -73,7 +82,8 @@ function App() {
   };
 
   useEffect(() => {
-    moveRecursively();
+    // moveRecursively();
+    jump();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
