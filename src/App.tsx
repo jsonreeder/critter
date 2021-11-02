@@ -66,7 +66,7 @@ function App() {
     const onFinish = async () => {
       const plant = firstPlant();
       if (plant) {
-        moveToPlant();
+        await moveToPlant(plant!.current!);
       } else {
         const willPoop = decideWillPoop();
         const milliseconds = willPoop ? 4000 : 1500;
@@ -165,27 +165,26 @@ function App() {
   };
 
   const decideWillPoop = () => {
+    return true; // TODO: Remove
     return Math.random() > 0.5; // Poop half the time
   };
 
   const firstPlant = () => {
-    const plant = poops.find(
-      (poop) =>
-        poop?.current?.isVisible() && poop?.current?.image() === imagePlant,
-    );
-    console.log(plant);
-    return plant;
+    const plantFound = poops.find((poop) => {
+      console.log('poop', poop.current?.image());
+      return poop?.current?.image() === imagePlant;
+    });
+    // console.log(plantFound?.current?.image() === imagePlant);
+    console.log(plantFound);
+    return plantFound;
   };
 
-  const moveToPlant = () => {
-    if (!critter.current) return;
-    if (!food.current) return;
-    food.current.zIndex(11);
-    critter.current.to({
-      x: food.current.x() - critterSize * 0.25,
-      y: food.current.y() - critterSize * 0.6,
+  const moveToPlant = (node: Konva.Image) => {
+    critter!.current!.to({
+      x: node.x() - critterSize * 0.25,
+      y: node.y() - critterSize * 0.6,
     });
-    eatPlant(food.current);
+    return eatPlant(node);
   };
 
   const eatPlant = async (node: Konva.Image) => {
