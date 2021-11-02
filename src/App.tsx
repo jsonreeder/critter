@@ -64,10 +64,15 @@ function App() {
   const moveRecursively = () => {
     if (!critter.current) return;
     const onFinish = async () => {
-      const willPoop = decideWillPoop();
-      const milliseconds = willPoop ? 4000 : 1500;
-      if (willPoop) setPoop();
-      await sleep(milliseconds);
+      const plant = firstPlant();
+      if (plant) {
+        moveToPlant();
+      } else {
+        const willPoop = decideWillPoop();
+        const milliseconds = willPoop ? 4000 : 1500;
+        if (willPoop) setPoop();
+        await sleep(milliseconds);
+      }
       moveRecursively();
     };
 
@@ -163,17 +168,18 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
-  const moveToPlant = () => {
-    if (!critter.current) return;
-    if (!food.current) return;
+  const firstPlant = () => {
     const plant = poops.find(
       (poop) =>
         poop?.current?.isVisible() && poop?.current?.image() === imagePlant,
     );
     console.log(plant);
-    critter.current.x(randomX());
-    critter.current.y(randomY());
-    critter.current.opacity(1);
+    return plant;
+  };
+
+  const moveToPlant = () => {
+    if (!critter.current) return;
+    if (!food.current) return;
     food.current.zIndex(11);
     critter.current.to({
       x: food.current.x() - critterSize * 0.25,
@@ -189,8 +195,7 @@ function App() {
   };
 
   useEffect(() => {
-    // startMovement();
-    moveToPlant();
+    startMovement();
   }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
@@ -207,7 +212,7 @@ function App() {
           <Image
             image={imagePoop}
             ref={ref}
-            visible={true}
+            visible={false}
             key={idx}
             draggable={true}
             onClick={handleClick}
