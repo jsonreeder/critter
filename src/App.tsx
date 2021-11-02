@@ -83,8 +83,10 @@ function App() {
     moveTween.current.play();
   };
 
+  const pauseMovement = () => moveTween.current?.destroy();
+
   const jump = async (event: Konva.KonvaEventObject<any>) => {
-    moveTween.current?.pause();
+    pauseMovement();
     const target = event.target as Konva.Image;
     const milliseconds = 100;
     const duration = 0.1;
@@ -129,7 +131,7 @@ function App() {
     await sleep(milliseconds);
 
     target.image(imageCritter);
-    moveTween.current?.play();
+    moveRecursively();
   };
 
   const setPoop = () => {
@@ -149,7 +151,6 @@ function App() {
 
   useEffect(() => {
     moveRecursively();
-    console.log(critter.current);
   }, [critter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
@@ -180,6 +181,9 @@ function App() {
           y={initialY}
           ref={critter}
           onClick={jump}
+          draggable={true}
+          onDragStart={pauseMovement}
+          onDragEnd={moveRecursively}
         />
       </Layer>
     </Stage>
