@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
 import useImage from 'use-image';
@@ -25,35 +25,54 @@ function App() {
 
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
-  const [imageCritter] = useImage(urlCritter);
+  const [imageCritter, imageCritterStatus] = useImage(urlCritter);
   const urlCritterChew =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/eat%2Fcritter-chew.png?alt=media&token=07230c02-47da-40ad-8ed1-29ed56365dd5';
-  const [imageCritterChew] = useImage(urlCritterChew);
+  const [imageCritterChew, imageCritterChewStatus] = useImage(urlCritterChew);
   const urlPoop =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/poop.png?alt=media&token=ce8fcdef-1e57-4213-8ac0-98991107a943';
-  const [imagePoop] = useImage(urlPoop);
+  const [imagePoop, imagePoopStatus] = useImage(urlPoop);
   const urlPlant =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/plant.png?alt=media&token=1ed59c0d-b854-4ef6-830c-1a605e82883e';
-  const [imagePlant] = useImage(urlPlant);
+  const [imagePlant, imagePlantStatus] = useImage(urlPlant);
   const urlPlantChewed =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/eat%2Fplant-chewed.png?alt=media&token=712b0594-e228-4660-b808-36bc09f8c054';
-  const [imagePlantChewed] = useImage(urlPlantChewed);
+  const [imagePlantChewed, imagePlantChewedStatus] = useImage(urlPlantChewed);
 
-  const [imageJump0] = useImage(
+  const [imageJump0, imageJump0Status] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump0.png?alt=media&token=5d429073-f5e9-47c2-9503-89b7ed2ca68a',
   );
-  const [imageJump1] = useImage(
+  const [imageJump1, imageJump1Status] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump1.png?alt=media&token=4ac56d32-19c5-46c9-9bdb-f49d8fdcdf60',
   );
-  const [imageJump2] = useImage(
+  const [imageJump2, imageJump2Status] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump2.png?alt=media&token=823e1e7d-75ec-4113-a79c-2f6ad08c2605',
   );
-  const [imageJump3] = useImage(
+  const [imageJump3, imageJump3Status] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump3.png?alt=media&token=768feef6-e1c8-437c-98a0-0c62fad4845e',
   );
-  const [imageJump4, lastImageLoaded] = useImage(
+  const [imageJump4, imageJump4Status] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump4.png?alt=media&token=8d5b313f-4fc2-4440-b870-43e5eb39d588',
   );
+
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const imageStatuses = [
+    imageCritterStatus,
+    imageCritterChewStatus,
+    imagePoopStatus,
+    imagePlantStatus,
+    imagePlantChewedStatus,
+    imageJump0Status,
+    imageJump1Status,
+    imageJump2Status,
+    imageJump3Status,
+    imageJump4Status,
+  ];
+
+  useEffect(() => {
+    setImagesLoaded(imageStatuses.every((status) => status === 'loaded'));
+  }, imageStatuses); // eslint-disable-line react-hooks/exhaustive-deps
 
   const critterSize = 100;
   const width = window.innerWidth;
@@ -206,8 +225,9 @@ function App() {
   };
 
   useEffect(() => {
+    if (!imagesLoaded) return;
     startMovement();
-  }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [imagesLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const convertToPlant = (event: any) => {
     event.target.offsetY(100);
@@ -215,7 +235,7 @@ function App() {
     event.target.name('plant');
   };
 
-  if (lastImageLoaded !== 'loaded') return null;
+  if (!imagesLoaded) return null;
 
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
