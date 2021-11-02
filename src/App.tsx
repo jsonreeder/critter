@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
 import useImage from 'use-image';
@@ -22,7 +22,6 @@ function App() {
     useRef<Konva.Image>(null),
     useRef<Konva.Image>(null),
   ];
-  const food = useRef<Konva.Image>(null);
 
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
@@ -169,17 +168,24 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
-  const firstPlant = () => {
+  const firstPlant = useCallback(() => {
     const plantFound = poops.find((poop) => {
-      console.log('poop', poop.current?.image());
+      console.log(
+        'poop',
+        poop.current?.image(),
+        'imagePlant',
+        imagePlant,
+        poop.current!.image() === imagePlant,
+      );
       return poop?.current?.image() === imagePlant;
     });
     // console.log(plantFound?.current?.image() === imagePlant);
     console.log(plantFound);
     return plantFound;
-  };
+  }, [imagePlant]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const moveToPlant = (node: Konva.Image) => {
+    node.zIndex(10);
     critter!.current!.to({
       x: node.x() - critterSize * 0.25,
       y: node.y() - critterSize * 0.6,
@@ -191,6 +197,7 @@ function App() {
     await sleep(2000);
     node.hide();
     node.image(imagePoop);
+    node.zIndex(0);
   };
 
   useEffect(() => {
@@ -220,14 +227,6 @@ function App() {
             scaleY={0.2}
           />
         ))}
-        <Image
-          image={imagePlant}
-          ref={food}
-          x={400}
-          y={400}
-          scaleX={0.2}
-          scaleY={0.2}
-        />
         <Image
           image={imageCritter}
           scaleX={0.2}
