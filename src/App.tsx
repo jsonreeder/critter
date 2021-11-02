@@ -22,6 +22,7 @@ function App() {
     useRef<Konva.Image>(null),
     useRef<Konva.Image>(null),
   ];
+  const food = useRef<Konva.Image>(null);
 
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
@@ -189,6 +190,14 @@ function App() {
             scaleY={0.2}
           />
         ))}
+        <Image
+          image={imagePlant}
+          ref={food}
+          x={400}
+          y={400}
+          scaleX={0.2}
+          scaleY={0.2}
+        />
         <Image
           image={imageCritter}
           scaleX={0.2}
