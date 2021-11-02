@@ -164,22 +164,13 @@ function App() {
   };
 
   const decideWillPoop = () => {
-    return true; // TODO: Remove
     return Math.random() > 0.5; // Poop half the time
   };
 
   const firstPlant = useCallback(() => {
-    const plantFound = poops.find((poop) => {
-      console.log(
-        'poop',
-        poop.current?.image(),
-        'imagePlant',
-        imagePlant,
-        poop.current!.image() === imagePlant,
-      );
-      return poop?.current?.image() === imagePlant;
-    });
-    // console.log(plantFound?.current?.image() === imagePlant);
+    const plantFound = poops.find(
+      (poop) => poop.current?.image() === imagePlant,
+    );
     console.log(plantFound);
     return plantFound;
   }, [imagePlant]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -197,7 +188,7 @@ function App() {
     await sleep(2000);
     node.hide();
     node.image(imagePoop);
-    node.zIndex(0);
+    node.zIndex(1);
   };
 
   useEffect(() => {
