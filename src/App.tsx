@@ -107,6 +107,7 @@ function App() {
       y: randomY(),
       duration: randomSpeed(),
       onFinish,
+      easing: Konva.Easings.StrongEaseIn,
     });
     moveTween.current.play();
   };
@@ -182,6 +183,7 @@ function App() {
   const setPoop = async () => {
     const poop = poops.find((el: any) => !el.current.visible())?.current;
     if (!poop) return;
+    await sleep(1000);
     critter.current!.image(imageCritterChew);
     await sleep(1000);
     poop.position({
