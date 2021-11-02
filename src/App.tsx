@@ -163,9 +163,14 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
-  const moveToPlant = async () => {
+  const moveToPlant = () => {
     if (!critter.current) return;
     if (!food.current) return;
+    const plant = poops.find(
+      (poop) =>
+        poop?.current?.isVisible() && poop?.current?.image() === imagePlant,
+    );
+    console.log(plant);
     critter.current.x(randomX());
     critter.current.y(randomY());
     critter.current.opacity(1);
@@ -174,11 +179,11 @@ function App() {
       x: food.current.x() - critterSize * 0.25,
       y: food.current.y() - critterSize * 0.6,
     });
-    await sleep(2000);
     eatPlant(food.current);
   };
 
-  const eatPlant = (node: Konva.Image) => {
+  const eatPlant = async (node: Konva.Image) => {
+    await sleep(2000);
     node.hide();
     node.image(imagePoop);
   };
@@ -202,7 +207,7 @@ function App() {
           <Image
             image={imagePoop}
             ref={ref}
-            visible={false}
+            visible={true}
             key={idx}
             draggable={true}
             onClick={handleClick}
