@@ -166,8 +166,8 @@ function App() {
         ))}
         <Image
           image={imageCritter}
-          width={critterSize}
-          height={critterSize}
+          scaleX={0.2}
+          scaleY={0.2}
           x={initialX}
           y={initialY}
           ref={critter}
