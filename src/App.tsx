@@ -163,8 +163,21 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
+  const moveToFood = () => {
+    if (!critter.current) return;
+    if (!food.current) return;
+    critter.current.x(randomX());
+    critter.current.y(randomY());
+    critter.current.opacity(1);
+    critter.current.to({
+      x: food.current.x() - critterSize * 0.25,
+      y: food.current.y(),
+    });
+  };
+
   useEffect(() => {
-    startMovement();
+    // startMovement();
+    moveToFood();
   }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
