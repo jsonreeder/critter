@@ -175,13 +175,13 @@ function App() {
     node.zIndex(10);
     critter!.current!.to({
       x: node.x() - critterSize * 0.25,
-      y: node.y() - critterSize * 0.6,
+      y: node.y() - critterSize * 0.8,
     });
     return eatPlant(node);
   };
 
   const eatPlant = async (node: Konva.Image) => {
-    await sleep(2000);
+    await sleep(1500);
     node.hide();
     node.image(imagePoop);
     node.name('poop');
