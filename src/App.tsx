@@ -61,23 +61,32 @@ function App() {
 
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
+  let moveTween: Konva.Tween;
+
   const moveRecursively = () => {
-    critter.current?.to({
+    if (!critter.current) return;
+    moveTween = new Konva.Tween({
+      node: critter.current,
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
-      onFinish: () => {
-        const willPoop = decideWillPoop();
-        const milliseconds = willPoop ? 4000 : 1500;
-        setTimeout(() => {
-          if (willPoop) setPoop();
-          moveRecursively();
-        }, milliseconds);
-      },
+      onFinish: moveRecursively,
     });
+    moveTween.play();
+    // critter.current?.to({
+    //   onFinish: () => {
+    //     const willPoop = decideWillPoop();
+    //     const milliseconds = willPoop ? 4000 : 1500;
+    //     setTimeout(() => {
+    //       if (willPoop) setPoop();
+    //       moveRecursively();
+    //     }, milliseconds);
+    //   },
+    // });
   };
 
   const jump = async (event: Konva.KonvaEventObject<any>) => {
+    // moveTween.pause();
     const target = event.target as Konva.Image;
     const milliseconds = 100;
     const duration = 0.1;
@@ -140,9 +149,9 @@ function App() {
   };
 
   useEffect(() => {
-    // moveRecursively();
-    // jump();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    moveRecursively();
+    console.log(critter.current);
+  }, [critter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
     event.target.offsetY(100);
