@@ -74,13 +74,20 @@ function App() {
     });
   };
 
-  const jump = (event: Konva.KonvaEventObject<any>) => {
+  const jump = async (event: Konva.KonvaEventObject<any>) => {
     const target = event.target as Konva.Image;
-    target.image(imageJump1);
-    target.to({
-      y: target.y() - 50,
-      duration: 0.2,
-    });
+    const jumpImages = [
+      imageJump0,
+      imageJump1,
+      imageJump2,
+      imageJump3,
+      imageJump4,
+      imageCritter,
+    ];
+    for (const img of jumpImages) {
+      await new Promise((f) => setTimeout(f, 200));
+      target.image(img);
+    }
   };
 
   const setPoop = () => {
