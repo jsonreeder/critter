@@ -163,7 +163,7 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
-  const moveToFood = async () => {
+  const moveToPlant = async () => {
     if (!critter.current) return;
     if (!food.current) return;
     critter.current.x(randomX());
@@ -185,7 +185,7 @@ function App() {
 
   useEffect(() => {
     // startMovement();
-    moveToFood();
+    moveToPlant();
   }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
