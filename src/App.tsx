@@ -22,7 +22,6 @@ function App() {
     useRef<Konva.Image>(null),
     useRef<Konva.Image>(null),
   ];
-  let nextPoop = 0;
 
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
@@ -135,14 +134,13 @@ function App() {
   };
 
   const setPoop = () => {
-    const poop = poops[nextPoop % poops.length].current;
+    const poop = poops.find((el: any) => !el.current.visible())?.current;
     if (!poop || !critter.current) return;
     poop.position({
       x: critter.current.x() + critterSize * 0.5,
       y: critter.current.y() + critterSize * 0.5,
     });
     poop.show();
-    nextPoop++;
   };
 
   const decideWillPoop = () => {
