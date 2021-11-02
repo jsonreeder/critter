@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
 import useImage from 'use-image';
@@ -167,13 +167,9 @@ function App() {
     return Math.random() > 0.5; // Poop half the time
   };
 
-  const firstPlant = useCallback(() => {
-    const plantFound = poops.find(
-      (poop) => poop.current?.image() === imagePlant,
-    );
-    console.log(plantFound);
-    return plantFound;
-  }, [imagePlant]); // eslint-disable-line react-hooks/exhaustive-deps
+  const firstPlant = () => {
+    return poops.find((poop) => poop.current?.name() === 'plant');
+  };
 
   const moveToPlant = (node: Konva.Image) => {
     node.zIndex(10);
@@ -188,6 +184,7 @@ function App() {
     await sleep(2000);
     node.hide();
     node.image(imagePoop);
+    node.name('poop');
     node.zIndex(1);
   };
 
@@ -198,6 +195,7 @@ function App() {
   const convertToPlant = (event: any) => {
     event.target.offsetY(100);
     event.target.image(imagePlant);
+    event.target.name('plant');
   };
 
   if (lastImageLoaded !== 'loaded') return null;
@@ -216,6 +214,7 @@ function App() {
             onTap={convertToPlant}
             scaleX={0.2}
             scaleY={0.2}
+            name="poop"
           />
         ))}
         <Image
