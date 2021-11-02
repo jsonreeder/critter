@@ -210,7 +210,7 @@ function App() {
     await sleep(1000); // Bite 1
     critter.current!.image(imageCritterChew);
     node.image(imagePlantChewed);
-    node.y(currentY + 15);
+    node.y(currentY + 12);
     await sleep(1000);
     critter.current!.image(imageCritter);
     await sleep(1000); // Bite 2
