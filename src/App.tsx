@@ -180,6 +180,7 @@ function App() {
             key={idx}
             draggable={true}
             onClick={handleClick}
+            onTap={handleClick}
             scaleX={0.2}
             scaleY={0.2}
           />
@@ -190,6 +191,7 @@ function App() {
           scaleY={0.2}
           ref={critter}
           onClick={jump}
+          onTap={jump}
           draggable={true}
           onDragStart={pauseMovement}
           onDragEnd={moveRecursively}
