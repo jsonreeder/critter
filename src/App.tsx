@@ -94,6 +94,10 @@ function App() {
   };
 
   const pauseMovement = () => moveTween.current?.destroy();
+  const resumeMovement = async () => {
+    await sleep(2000);
+    moveRecursively();
+  };
 
   const jump = async (event: Konva.KonvaEventObject<any>) => {
     pauseMovement();
@@ -193,8 +197,8 @@ function App() {
           onClick={jump}
           onTap={jump}
           draggable={true}
-          onDragStart={pauseMovement}
-          onDragEnd={moveRecursively}
+          onDragMove={pauseMovement}
+          onDragEnd={resumeMovement}
           opacity={0}
         />
       </Layer>
