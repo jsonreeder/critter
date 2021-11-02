@@ -189,7 +189,6 @@ function App() {
   };
 
   const decideWillPoop = () => {
-    return true; // TODO: Remove
     return Math.random() > 0.5; // Poop half the time
   };
 
