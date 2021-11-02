@@ -61,18 +61,18 @@ function App() {
 
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
-  let moveTween: Konva.Tween;
+  const moveTween = useRef<Konva.Tween>();
 
   const moveRecursively = () => {
     if (!critter.current) return;
-    moveTween = new Konva.Tween({
+    moveTween.current = new Konva.Tween({
       node: critter.current,
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
       onFinish: moveRecursively,
     });
-    moveTween.play();
+    moveTween.current.play();
     // critter.current?.to({
     //   onFinish: () => {
     //     const willPoop = decideWillPoop();
@@ -86,7 +86,7 @@ function App() {
   };
 
   const jump = async (event: Konva.KonvaEventObject<any>) => {
-    // moveTween.pause();
+    moveTween.current?.pause();
     const target = event.target as Konva.Image;
     const milliseconds = 100;
     const duration = 0.1;
@@ -131,6 +131,7 @@ function App() {
     await sleep(milliseconds);
 
     target.image(imageCritter);
+    moveTween.current?.play();
   };
 
   const setPoop = () => {
