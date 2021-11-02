@@ -5,7 +5,7 @@ import { Image, Layer, Stage } from 'react-konva';
 import useImage from 'use-image';
 
 function sleep(milliseconds: number) {
-  return new Promise((f) => setTimeout(f, 200));
+  return new Promise((f) => setTimeout(f, milliseconds));
 }
 
 function App() {
@@ -65,13 +65,12 @@ function App() {
 
   const moveRecursively = () => {
     if (!critter.current) return;
-    const onFinish = () => {
+    const onFinish = async () => {
       const willPoop = decideWillPoop();
       const milliseconds = willPoop ? 4000 : 1500;
-      setTimeout(() => {
-        if (willPoop) setPoop();
-        moveRecursively();
-      }, milliseconds);
+      if (willPoop) setPoop();
+      await sleep(milliseconds);
+      moveRecursively();
     };
 
     moveTween.current = new Konva.Tween({
