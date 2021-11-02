@@ -65,24 +65,23 @@ function App() {
 
   const moveRecursively = () => {
     if (!critter.current) return;
+    const onFinish = () => {
+      const willPoop = decideWillPoop();
+      const milliseconds = willPoop ? 4000 : 1500;
+      setTimeout(() => {
+        if (willPoop) setPoop();
+        moveRecursively();
+      }, milliseconds);
+    };
+
     moveTween.current = new Konva.Tween({
       node: critter.current,
       x: randomX(),
       y: randomY(),
       duration: randomSpeed(),
-      onFinish: moveRecursively,
+      onFinish,
     });
     moveTween.current.play();
-    // critter.current?.to({
-    //   onFinish: () => {
-    //     const willPoop = decideWillPoop();
-    //     const milliseconds = willPoop ? 4000 : 1500;
-    //     setTimeout(() => {
-    //       if (willPoop) setPoop();
-    //       moveRecursively();
-    //     }, milliseconds);
-    //   },
-    // });
   };
 
   const jump = async (event: Konva.KonvaEventObject<any>) => {
