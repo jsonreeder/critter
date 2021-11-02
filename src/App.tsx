@@ -93,9 +93,10 @@ function App() {
         await moveToPlant(plant!.current!);
       } else {
         const willPoop = decideWillPoop();
-        const milliseconds = willPoop ? 4000 : 1500;
-        if (willPoop) setPoop();
-        await sleep(milliseconds);
+        if (willPoop) await setPoop();
+        else {
+          await sleep(1500);
+        }
       }
       moveRecursively();
     };
@@ -178,14 +179,18 @@ function App() {
     moveRecursively();
   };
 
-  const setPoop = () => {
+  const setPoop = async () => {
     const poop = poops.find((el: any) => !el.current.visible())?.current;
-    if (!poop || !critter.current) return;
+    if (!poop) return;
+    critter.current!.image(imageCritterChew);
+    await sleep(1000);
     poop.position({
-      x: critter.current.x() + critterSize * 0.5,
-      y: critter.current.y() + critterSize * 0.5,
+      x: critter.current!.x() + critterSize * 0.5,
+      y: critter.current!.y() + critterSize * 0.5,
     });
     poop.show();
+    await sleep(1000);
+    critter.current!.image(imageCritter);
   };
 
   const decideWillPoop = () => {
