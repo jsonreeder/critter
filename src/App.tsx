@@ -195,7 +195,7 @@ function App() {
     startMovement();
   }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleClick = (event: any) => {
+  const convertToPlant = (event: any) => {
     event.target.offsetY(100);
     event.target.image(imagePlant);
   };
@@ -212,8 +212,8 @@ function App() {
             visible={false}
             key={idx}
             draggable={true}
-            onClick={handleClick}
-            onTap={handleClick}
+            onClick={convertToPlant}
+            onTap={convertToPlant}
             scaleX={0.2}
             scaleY={0.2}
           />
