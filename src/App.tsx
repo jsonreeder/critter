@@ -169,9 +169,10 @@ function App() {
     critter.current.x(randomX());
     critter.current.y(randomY());
     critter.current.opacity(1);
+    food.current.zIndex(12);
     critter.current.to({
       x: food.current.x() - critterSize * 0.25,
-      y: food.current.y(),
+      y: food.current.y() - critterSize * 0.6,
     });
   };
 
