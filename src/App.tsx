@@ -45,7 +45,7 @@ function App() {
   const [imageJump3] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump3.png?alt=media&token=768feef6-e1c8-437c-98a0-0c62fad4845e',
   );
-  const [imageJump4] = useImage(
+  const [imageJump4, lastImageLoaded] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump4.png?alt=media&token=8d5b313f-4fc2-4440-b870-43e5eb39d588',
   );
 
@@ -55,8 +55,6 @@ function App() {
 
   const randomX = () => Math.random() * (width - critterSize);
   const randomY = () => Math.random() * (height - critterSize);
-  const initialX = randomX();
-  const initialY = randomY();
 
   const randomSpeed = () => Math.floor(Math.random() * 4) + 1;
 
@@ -80,6 +78,18 @@ function App() {
       onFinish,
     });
     moveTween.current.play();
+  };
+
+  const startMovement = async () => {
+    if (!critter.current) return;
+    const duration = 4;
+    critter.current.x(randomX());
+    critter.current.y(randomY());
+    critter.current.to({
+      opacity: 1,
+      duration,
+      onFinish: moveRecursively,
+    });
   };
 
   const pauseMovement = () => moveTween.current?.destroy();
@@ -148,13 +158,15 @@ function App() {
   };
 
   useEffect(() => {
-    moveRecursively();
-  }, [critter]); // eslint-disable-line react-hooks/exhaustive-deps
+    startMovement();
+  }, [lastImageLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (event: any) => {
     event.target.offsetY(100);
     event.target.image(imagePlant);
   };
+
+  if (lastImageLoaded !== 'loaded') return null;
 
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
@@ -175,13 +187,12 @@ function App() {
           image={imageCritter}
           scaleX={0.2}
           scaleY={0.2}
-          x={initialX}
-          y={initialY}
           ref={critter}
           onClick={jump}
           draggable={true}
           onDragStart={pauseMovement}
           onDragEnd={moveRecursively}
+          opacity={0}
         />
       </Layer>
     </Stage>
