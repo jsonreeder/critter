@@ -1,9 +1,12 @@
 import Konva from 'konva';
-import { Easings } from 'konva/lib/Tween';
-import React, { useEffect, useRef, MouseEvent } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 
 import useImage from 'use-image';
+
+function sleep(milliseconds: number) {
+  return new Promise((f) => setTimeout(f, 200));
+}
 
 function App() {
   const critter = useRef<Konva.Image>(null);
@@ -76,18 +79,49 @@ function App() {
 
   const jump = async (event: Konva.KonvaEventObject<any>) => {
     const target = event.target as Konva.Image;
-    const jumpImages = [
-      imageJump0,
-      imageJump1,
-      imageJump2,
-      imageJump3,
-      imageJump4,
-      imageCritter,
-    ];
-    for (const img of jumpImages) {
-      await new Promise((f) => setTimeout(f, 200));
-      target.image(img);
-    }
+    const milliseconds = 100;
+    const duration = 0.1;
+    const initialY = target.y();
+
+    target.image(imageJump0);
+
+    target.to({
+      y: initialY - 10,
+      duration,
+    });
+    await sleep(milliseconds);
+    target.image(imageJump1);
+
+    target.to({
+      y: initialY - 20,
+      duration,
+    });
+    await sleep(milliseconds);
+    target.image(imageJump2);
+
+    target.to({
+      y: initialY - 40,
+      duration,
+    });
+    await sleep(milliseconds);
+    target.image(imageJump3);
+
+    target.to({
+      y: initialY - 20,
+      duration,
+    });
+    await sleep(milliseconds);
+    target.image(imageJump4);
+
+    target.to({
+      y: initialY,
+      duration,
+    });
+    await sleep(milliseconds);
+    target.image(imageJump0);
+    await sleep(milliseconds);
+
+    target.image(imageCritter);
   };
 
   const setPoop = () => {
