@@ -89,6 +89,7 @@ function App() {
       opacity: 1,
       duration,
       onFinish: moveRecursively,
+      easing: Konva.Easings.BounceEaseIn,
     });
   };
 
