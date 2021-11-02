@@ -26,12 +26,18 @@ function App() {
   const urlCritter =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/critter.png?alt=media&token=b7518137-bbe0-47f6-92cc-b6501a656cc3';
   const [imageCritter] = useImage(urlCritter);
+  const urlCritterChew =
+    'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/eat%2Fcritter-chew.png?alt=media&token=07230c02-47da-40ad-8ed1-29ed56365dd5';
+  const [imageCritterChew] = useImage(urlCritterChew);
   const urlPoop =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/poop.png?alt=media&token=ce8fcdef-1e57-4213-8ac0-98991107a943';
   const [imagePoop] = useImage(urlPoop);
   const urlPlant =
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/plant.png?alt=media&token=1ed59c0d-b854-4ef6-830c-1a605e82883e';
   const [imagePlant] = useImage(urlPlant);
+  const urlPlantChewed =
+    'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/eat%2Fplant-chewed.png?alt=media&token=712b0594-e228-4660-b808-36bc09f8c054';
+  const [imagePlantChewed] = useImage(urlPlantChewed);
 
   const [imageJump0] = useImage(
     'https://firebasestorage.googleapis.com/v0/b/critter-8c09a.appspot.com/o/jump%2Fjump0.png?alt=media&token=5d429073-f5e9-47c2-9503-89b7ed2ca68a',
@@ -164,6 +170,7 @@ function App() {
   };
 
   const decideWillPoop = () => {
+    return true; // TODO: Remove
     return Math.random() > 0.5; // Poop half the time
   };
 
@@ -171,21 +178,31 @@ function App() {
     return poops.find((poop) => poop.current?.name() === 'plant');
   };
 
-  const moveToPlant = (node: Konva.Image) => {
+  const moveToPlant = async (node: Konva.Image) => {
     node.zIndex(10);
-    critter!.current!.to({
+    const duration = 2;
+    const currentY = node.y();
+    critter.current!.to({
       x: node.x() - critterSize * 0.25,
-      y: node.y() - critterSize * 0.8,
+      y: currentY - critterSize * 0.8,
+      duration,
     });
-    return eatPlant(node);
-  };
-
-  const eatPlant = async (node: Konva.Image) => {
-    await sleep(1500);
+    await sleep(duration * 1000); // Arrive at the plant
+    await sleep(1000); // Bite 1
+    critter.current!.image(imageCritterChew);
+    node.image(imagePlantChewed);
+    node.y(currentY + 15);
+    await sleep(1000);
+    critter.current!.image(imageCritter);
+    await sleep(1000); // Bite 2
+    critter.current!.image(imageCritterChew);
     node.hide();
     node.image(imagePoop);
     node.name('poop');
     node.zIndex(1);
+    await sleep(1000);
+    critter.current!.image(imageCritter);
+    await sleep(1000);
   };
 
   useEffect(() => {
